@@ -1,48 +1,159 @@
 import React from "react";
-import {Link} from 'react-router-dom'
-import SliderComponent from "./SliderComponent";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import SliderComponent from "./Slider/SliderComponent";
+import awarenessImage from "/assets/Screenshot 2025-01-14 002455.png";
+import CardH from "./Card/CardH"
+import { useState } from "react";
+import image1 from "/assets/Screenshot 2025-01-14 002455.png"
+import image2 from "/assets/Screenshot 2025-01-14 002455.png"
+import image3 from "/assets/Screenshot 2025-01-14 002455.png"
+import News from "./Card/News";
 export default function Home() {
+    const cardData = [
+        {
+            title: "Innovation",
+            description: "Exploring new technologies and creating innovative solutions.",
+            image: "/assets/Screenshot 2025-01-14 002455.png",
+        },
+        {
+            title: "Collaboration",
+            description: "Working together to achieve groundbreaking results.",
+            image: "/assets/Screenshot 2025-01-14 002455.png",
+        },
+        {
+            title: "Sustainability",
+            description: "Ensuring long-term positive impact on the environment.",
+            image: "/assets/Screenshot 2025-01-14 002455.png",
+        },
+    ];
+    const [showFullText, setShowFullText] = useState(false);
+
+    const text = "Learn about the signs, symptoms, and preventative measures for breast cancer. Early detection saves lives. Educate yourself and spread awareness to make a difference.>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum aliquam ullam voluptates, asperiores ipsa deserunt laudantium dicta excepturi laborum ea exercitationem laboriosam reiciendis in maiores, ut veritatis cumque ipsam provident atque necessitatibus magnam! Ut ab sint voluptatum omnis voluptatem hic! Error nesciunt provident ipsum aperiam amet, inventore incidunt rerum repudiandae?";
+
+    const handleLearnMore = () => {
+        setShowFullText(true);
+    };
+
+    
+    useEffect(() => {
+        const elements = document.querySelectorAll(".animate-on-scroll");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Add animation classes when element enters the viewport
+                entry.target.classList.add("opacity-100", "translate-y-0");
+                entry.target.classList.remove("opacity-0", "translate-y-10");
+              } else {
+                // Reset animation classes when element leaves the viewport
+                entry.target.classList.remove("opacity-100", "translate-y-0");
+                entry.target.classList.add("opacity-0", "translate-y-10");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+    
+        elements.forEach((el) => observer.observe(el));
+    
+        return () => observer.disconnect();
+      }, []);
+
     return (
         <div className="mx-auto w-full max-w-7xl">
-             <SliderComponent />
-            
-            <aside className="relative overflow-hidden text-black rounded-lg sm:mx-16 mx-2 sm:py-16">
-                <div className="relative z-10 max-w-screen-xl px-4  pb-20 pt-10 sm:py-24 mx-auto sm:px-6 lg:px-8">
-                    <div className="max-w-xl sm:mt-1 mt-80 space-y-8 text-center sm:text-right sm:ml-auto">
-                        <h2 className="text-4xl font-bold sm:text-5xl">
-                            Download Now
-                            <span className="hidden sm:block text-4xl">Lorem Ipsum</span>
-                        </h2>
+            <SliderComponent />
 
-                        <Link
-                            className="inline-flex text-white items-center px-6 py-3 font-medium bg-orange-700 rounded-lg hover:opacity-75"
-                            to="/"
-                        >
-                            <svg
-                                fill="white"
-                                width="24"
-                                height="24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                            >
-                                <path d="M1.571 23.664l10.531-10.501 3.712 3.701-12.519 6.941c-.476.264-1.059.26-1.532-.011l-.192-.13zm9.469-11.56l-10.04 10.011v-20.022l10.04 10.011zm6.274-4.137l4.905 2.719c.482.268.781.77.781 1.314s-.299 1.046-.781 1.314l-5.039 2.793-4.015-4.003 4.149-4.137zm-15.854-7.534c.09-.087.191-.163.303-.227.473-.271 1.056-.275 1.532-.011l12.653 7.015-3.846 3.835-10.642-10.612z" />
-                            </svg>
-                            &nbsp; Download now
-                        </Link>
-                    </div>
+            {/* Image Section */}
+            <section className="animate-on-scroll opacity-0 translate-y-10 transition duration-700 flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-pink-50 to-gray-100 p-10 rounded-lg shadow-lg transition duration-500 hover:shadow-2xl hover:bg-gradient-to-r hover:from-pink-100 hover:to-gray-200">
+            {/* Image Section */}
+            <div className="relative sm:w-1/2 w-full p-4 flex justify-center">
+                <div className="relative w-full h-80 sm:h-96">
+                    {/* Image 1 */}
+                    <img
+                        src={image1}
+                        alt="Awareness 1"
+                        className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 sm:w-32 sm:h-32 rounded-lg shadow-lg transition duration-500 hover:scale-110 hover:rotate-1"
+                    />
+                    {/* Image 2 */}
+                    <img
+                        src={image2}
+                        alt="Awareness 2"
+                        className="absolute bottom-0 left-5 sm:left-10 w-24 h-24 sm:w-32 sm:h-32 rounded-lg shadow-lg transition duration-500 hover:scale-110 hover:rotate-1"
+                    />
+                    {/* Image 3 */}
+                    <img
+                        src={image3}
+                        alt="Awareness 3"
+                        className="absolute bottom-0 right-5 sm:right-10 w-24 h-24 sm:w-32 sm:h-32 rounded-lg shadow-lg transition duration-500 hover:scale-110 hover:rotate-1"
+                    />
                 </div>
-
-                <div className="absolute inset-0 w-full sm:my-20 sm:pt-1 pt-12 h-full ">
-                    <img className="w-96" src="https://i.ibb.co/5BCcDYB/Remote2.png" alt="image1" />
-                </div>
-            </aside>
-
-            <div className="grid  place-items-center sm:mt-20">
-                <img className="sm:w-96 w-48" src="https://i.ibb.co/2M7rtLk/Remote1.png" alt="image2" />
             </div>
 
-            <h1 className="text-center text-2xl sm:text-5xl py-10 font-medium">Lorem Ipsum Yojo</h1>
+         
+
+            {/* Text Section */}
+            <div className="sm:w-1/2 w-full p-4 space-y-6">
+                <h2 className="text-4xl font-extrabold text-gray-800 transition duration-500 hover:text-pink-600">
+                    Breast Cancer Awareness & Education
+                </h2>
+                <p className="text-gray-700 leading-relaxed transition duration-500 hover:text-gray-900">
+                    {showFullText ? text : `${text.split(" ").slice(0, 30).join(" ")}...`}
+                </p>
+                {!showFullText && (
+                    <button
+                        onClick={handleLearnMore}
+                        className="px-6 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md transform transition duration-500 hover:bg-pink-700 hover:scale-105 hover:shadow-lg"
+                    >
+                        Learn More
+                    </button>
+                )}
+            </div>
+        </section>
+
+            {/*AWARENESS SECTION  */}
+            <section className=" animate-on-scroll opacity-0 translate-y-10 transition duration-700 flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-pink-50 to-gray-100 p-10 rounded-lg shadow-lg transition duration-500 hover:shadow-2xl hover:bg-gradient-to-r hover:from-pink-100 hover:to-gray-200">
+            {/* Image Section */}
+            <div className="sm:w-1/2 w-full p-4">
+                <img
+                    src={awarenessImage}
+                    alt="Awareness"
+                    className="w-full h-auto rounded-lg transform transition duration-500 hover:scale-110 hover:rotate-1"
+                />
+            </div>
+
+            {/* Text Section */}
+            <div className="sm:w-1/2 w-full p-4 space-y-6">
+                <h2 className="text-4xl font-extrabold text-gray-800 transition duration-500 hover:text-pink-600">
+                    Breast Cancer Awareness & Education
+                </h2>
+                <p className="text-gray-700 leading-relaxed transition duration-500 hover:text-gray-900">
+                    {showFullText ? text : `${text.split(" ").slice(0, 30).join(" ")}...`}
+                </p>
+                {!showFullText && (
+                    <button
+                        onClick={handleLearnMore}
+                        className="px-6 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md transform transition duration-500 hover:bg-pink-700 hover:scale-105 hover:shadow-lg"
+                    >
+                        Learn More
+                    </button>
+                )}
+            </div>
+        </section>
+
+            {/* Research and Development Section */}
+            <section className="animate-on-scroll opacity-0 translate-y-10 transition duration-700 bg-gray-100 py-16 px-4 sm:px-8">
+                <div className="text-center mb-10">
+                    <h2 className="text-4xl font-bold mb-4">Research and Development</h2>
+                    <p className="text-gray-600">Discover how we innovate and create value for a better future.</p>
+                </div>
+                <div className="grid gap-6 sm:grid-cols-3">
+                    {cardData.map((card, index) => (
+                        <CardH key={index} title={card.title} description={card.description} image={card.image} />
+                    ))}
+                </div>
+            </section>
+            <News/>
         </div>
     );
 }
