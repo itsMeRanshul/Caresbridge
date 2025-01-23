@@ -5,26 +5,27 @@ import { ProductContext } from "../Context.js/ProductContext";
 
 const ProductDescription = () => {
     const { id } = useParams(); // Get the dynamic product ID from the URL
-    const { products, loading ,addToCart} = useContext(ProductContext);
-    const navigate = useNavigate(); // Initialize useNavigate hook
+    const { products, loading, addToCart } = useContext(ProductContext); // Change: Ensure context values are used correctly
 
+    const navigate = useNavigate(); // Initialize useNavigate hook
+    
     if (loading) {
         return <p>Loading product details...</p>;
     }
-    const product = products.find((item) => item.id === parseInt(id, 10)); // Find the product by ID
+    const product = products.find((item) => item.product_id === parseInt(id, 10)); // Change: Used parseInt to ensure type matching
 
     if (!product) {
         return <p className="text-center text-gray-600">Product not found.</p>;
     }
 
     const {
-        image,
+        image_url: image, // Rename image_url to image for use in the component
         name,
         description,
         benefits,
-        sideEffects,
-        directions,
-        safetyAdvice,
+        side_effects: sideEffects, // Rename side_effects to sideEffects for use in the component
+        direction: directions, // Rename direction to directions for use in the component
+        safety_info: safetyAdvice, //
     } = product;
 
     return (

@@ -10,7 +10,7 @@ const ProductCard = ({ products }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
                     <div
-                        key={product.id}
+                        key={product.product_id}
                         className="bg-white rounded-lg shadow-lg overflow-hidden"
                     >
                         <img
@@ -24,7 +24,7 @@ const ProductCard = ({ products }) => {
                             </h3>
                             <p className="text-gray-600 mb-4">Price: ${product.price}</p>
                             <Link
-                                to={`/Product/${product.id}`}
+                                to={`/Product/${product.product_id}`}
                                 className="px-4 py-2 bg-pink-500 text-white rounded-full hover:bg-pink-600"
                             >
                                 View

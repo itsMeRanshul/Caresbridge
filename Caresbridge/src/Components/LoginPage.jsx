@@ -1,4 +1,5 @@
 // LoginPage.js
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -11,27 +12,50 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Mock login validation (replace with real API call)
-    const mockUsers = {
-      "john.doe@example.com": { userId: 1, password: "password123" },
-      "jane.smith@example.com": { userId: 2, password: "password456" },
-    };
-
-    const user = mockUsers[email];
-
-    if (user && user.password === password) {
-      // Successful login, redirect to profile page with userId
-      navigate(`/profile/${user.userId}`);
-    } else {
-      setError("Invalid credentials. Please try again.");
+  
+    try {
+      // Send login data to the backend
+      const response = await axios.post("http://127.0.0.1:8000/login", {
+        email: email, // Assuming `email` and `password` are state variables
+        password: password,
+      });
+  
+      // Successful login response
+      const data = response.data;
+      if (data) {
+        const { access_token, user_id, is_admin } = data;
+  
+        // Store token in localStorage or cookies
+        localStorage.setItem("access_token", access_token);
+  
+        // Redirect based on role
+        if (is_admin) {
+          navigate(`/admin`); // Redirect to admin panel if the user is an admin
+        } else {
+          navigate(`/profile/${user_id}`); // Redirect to profile page
+        }
+      }
+    } catch (error) {
+      // Handle login errors
+      if (error.response && error.response.status === 401) {
+        setError("Invalid credentials. Please try again.");
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
     }
   };
+  
 
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center">Login</h2>
+        {error && ( // Highlighted addition
+               <div className="p-3 text-sm text-red-600 bg-red-100 border border-red-400 rounded-md">
+                 {error}
+               </div>
+             )}
         <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
