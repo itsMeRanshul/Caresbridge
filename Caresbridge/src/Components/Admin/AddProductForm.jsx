@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const AddProductForm = () => {
   const [product, setProduct] = useState({
@@ -6,28 +7,46 @@ const AddProductForm = () => {
     price: "",
     description: "",
     benefits: "",
-    sideEffects: "",
-    directionToUse: "",
-    safety: "",
+    side_effects: "",
+    direction: "",
+    safety_info: "",
+    stock: "",
+    image_url: "", // Change from file to URL
   });
 
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Product Added:", product);
-    alert("Product added successfully!");
-    setProduct({
-      name: "",
-      price: "",
-      description: "",
-      benefits: "",
-      sideEffects: "",
-      directionToUse: "",
-      safety: "",
-    });
+
+    try {
+      const response = await axios.post("http://localhost:8000/admin/addproduct/", product, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Product added successfully:", response.data);
+      alert("Product added successfully!");
+
+      setProduct({
+        name: "",
+        price: "",
+        description: "",
+        benefits: "",
+        side_effects: "",
+        direction: "",
+        safety_info: "",
+        stock: "",
+        image_url: "",
+      });
+    } catch (error) {
+      console.error("Error adding product:", error.response || error.message);
+      alert("Failed to add product. Please try again.");
+    }
   };
 
   return (
@@ -67,25 +86,43 @@ const AddProductForm = () => {
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="sideEffects"
+        name="side_effects"
         placeholder="Side Effects"
-        value={product.sideEffects}
+        value={product.side_effects}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="directionToUse"
+        name="direction"
         placeholder="Direction to Use"
-        value={product.directionToUse}
+        value={product.direction}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="safety"
+        name="safety_info"
         placeholder="Safety Information"
-        value={product.safety}
+        value={product.safety_info}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
+      />
+      <input
+        type="number"
+        name="stock"
+        placeholder="Stock Quantity"
+        value={product.stock}
+        onChange={handleChange}
+        className="border p-2 w-full mb-4"
+        required
+      />
+      <input
+        type="text"
+        name="image_url"
+        placeholder="Image URL"
+        value={product.image_url}
+        onChange={handleChange}
+        className="border p-2 w-full mb-4"
+        required
       />
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Add Product

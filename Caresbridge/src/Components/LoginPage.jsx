@@ -1,33 +1,37 @@
-// LoginPage.js
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./Context.js/AutoContext";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const { loginUser } = useAuth(); // Access the loginUser function from AuthContext
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       // Send login data to the backend
       const response = await axios.post("http://127.0.0.1:8000/login", {
-        email: email, // Assuming `email` and `password` are state variables
-        password: password,
+        email,
+        password,
       });
-  
+
       // Successful login response
       const data = response.data;
       if (data) {
-        const { access_token, user_id, is_admin } = data;
-  
-        // Store token in localStorage or cookies
-        localStorage.setItem("access_token", access_token);
-  
+        const { user_id, is_admin } = data;
+
+        // Update context using loginUser
+        loginUser(user_id,is_admin);
+
+        // Store additional information in localStorage
+        localStorage.setItem("is_admin", JSON.stringify(is_admin));
+
         // Redirect based on role
         if (is_admin) {
           navigate(`/admin`); // Redirect to admin panel if the user is an admin
@@ -44,18 +48,16 @@ const LoginPage = () => {
       }
     }
   };
-  
-
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-pink-50">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center">Login</h2>
-        {error && ( // Highlighted addition
-               <div className="p-3 text-sm text-red-600 bg-red-100 border border-red-400 rounded-md">
-                 {error}
-               </div>
-             )}
+        {error && (
+          <div className="p-3 text-sm text-red-600 bg-red-100 border border-red-400 rounded-md">
+            {error}
+          </div>
+        )}
         <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -97,7 +99,9 @@ const LoginPage = () => {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Not registered?{" "}
-            <Link  to='/Register'className="text-blue-500 font-semibold">Register</Link>
+            <Link to="/Register" className="text-blue-500 font-semibold">
+              Register
+            </Link>
           </p>
         </div>
       </div>

@@ -11,11 +11,13 @@ Base.metadata.create_all(bind=Engine)
 app = FastAPI(title="E-commerce API")
 
 
-app.add_middleware(CORSMiddleware,
-    allow_origins=["*"], 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Update this to match your frontend's URL
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],)
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 # Include routers
 app.include_router(user.router)
 app.include_router(product.router)

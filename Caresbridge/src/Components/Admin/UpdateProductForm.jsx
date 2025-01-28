@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const UpdateProductForm = () => {
   const [productId, setProductId] = useState("");
@@ -7,19 +8,30 @@ const UpdateProductForm = () => {
     price: "",
     description: "",
     benefits: "",
-    sideEffects: "",
-    directionToUse: "",
-    safety: "",
+    side_effects: "",
+    direction: "",
+    safety_info: "",
+    stock: "",
   });
 
   const handleChange = (e) => {
     setUpdatedData({ ...updatedData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Product ${productId} Updated:, updatedData`);
-    alert("Product updated successfully!");
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/admin/updateproduct/${productId}`,
+        updatedData
+      );
+      console.log("Product updated successfully:", response.data);
+      alert("Product updated successfully!");
+    } catch (error) {
+      console.error("Error updating product:", error);
+      alert("Failed to update product. Please try again.");
+    }
   };
 
   return (
@@ -64,23 +76,31 @@ const UpdateProductForm = () => {
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="sideEffects"
+        name="side_effects"
         placeholder="Updated Side Effects"
-        value={updatedData.sideEffects}
+        value={updatedData.side_effects}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="directionToUse"
-        placeholder="Updated Direction to Use"
-        value={updatedData.directionToUse}
+        name="direction"
+        placeholder="Updated Direction"
+        value={updatedData.direction}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
       />
       <textarea
-        name="safety"
+        name="safety_info"
         placeholder="Updated Safety Information"
-        value={updatedData.safety}
+        value={updatedData.safety_info}
+        onChange={handleChange}
+        className="border p-2 w-full mb-4"
+      />
+      <input
+        type="number"
+        name="stock"
+        placeholder="Updated Stock"
+        value={updatedData.stock}
         onChange={handleChange}
         className="border p-2 w-full mb-4"
       />

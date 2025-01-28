@@ -81,6 +81,11 @@ class Payment(Base):
     payment_method = Column(Enum(PaymentMethodEnum), nullable=False)
     payment_reference = Column(String, nullable=False)
     status = Column(Enum(PaymentStatusEnum), nullable=False)
+    razorpay_order_id = Column(String, nullable=True)
+    razorpay_payment_id = Column(String, nullable=True)
+    razorpay_signature = Column(String, nullable=True)
+    amount = Column(Float, nullable=False)
+    currency = Column(String, nullable=True)  
 
     order = relationship("Order")
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const SliderComponent = () => {
   const slides = [
-    { id: 1, title: "Slide 1", image: "/assets/Screenshot 2025-01-14 002455.png" },
-    { id: 2, title: "Slide 2", image: "/assets/Screenshot 2025-01-14 002455.png" },
-    { id: 3, title: "Slide 3", image: "/assets/Screenshot 2025-01-14 002455.png" },
+    { id: 1, title: "Slide 1", image: "assets/slider6.png" },
+    { id: 2, title: "Slide 2", image: "assets/slider5.png" },
+    { id: 3, title: "Slide 3", image: "/assets/slider4.webp" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,7 +12,7 @@ const SliderComponent = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -27,27 +27,23 @@ const SliderComponent = () => {
   };
 
   return (
-    <div className="relative w-screen mt-4 mx-auto overflow-hidden">
+    <div className="relative w-full max-w-7xl mx-auto mt-4 overflow-hidden">
       {/* Slider */}
       <div
-        className="flex transition-transform duration-[1200ms] ease-[cubic-bezier(0.77, 0, 0.175, 1)] transform"
-        style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
-        }}
+        className="flex transition-transform duration-[1200ms] ease-[cubic-bezier(0.77, 0, 0.175, 1)]"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {slides.map((slide, index) => (
+        {slides.map((slide) => (
           <div
             key={slide.id}
-            className={`min-w-full flex-shrink-0 transition-opacity duration-[800ms] ${
-              index === currentIndex ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            }`}
+            className="min-w-full flex-shrink-0 transition-opacity duration-[800ms]"
           >
             <img
               src={slide.image}
               alt={slide.title}
-              className="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-[400px] object-cover"
+              className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] object-cover rounded-lg"
             />
-            <h3 className="text-center text-lg md:text-xl font-medium mt-2 md:mt-4">
+            <h3 className="text-center text-sm sm:text-base md:text-lg font-medium mt-2 text-[#333333]">
               {slide.title}
             </h3>
           </div>
@@ -56,13 +52,13 @@ const SliderComponent = () => {
 
       {/* Navigation Buttons */}
       <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 transition-transform duration-300 hover:scale-110"
+        className="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-[#888888] text-white p-2 rounded-full shadow-lg hover:bg-[#555555] focus:outline-none focus:ring-2 focus:ring-[#888888] transition-transform duration-300 hover:scale-110"
         onClick={prevSlide}
       >
         &#8249;
       </button>
       <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 transition-transform duration-300 hover:scale-110"
+        className="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-[#888888] text-white p-2 rounded-full shadow-lg hover:bg-[#555555] focus:outline-none focus:ring-2 focus:ring-[#888888] transition-transform duration-300 hover:scale-110"
         onClick={nextSlide}
       >
         &#8250;
@@ -75,19 +71,11 @@ const SliderComponent = () => {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-3 h-3 rounded-full transition-colors duration-300 transform hover:scale-125 ${
-              index === currentIndex ? "bg-gray-800" : "bg-gray-400"
+              index === currentIndex ? "bg-[#333333]" : "bg-[#BBBBBB]"
             }`}
           />
         ))}
       </div>
-
-      <style jsx>{`
-        @media (max-width: 640px) {
-          img {
-            height: 250px;
-          }
-        }
-      `}</style>
     </div>
   );
 };

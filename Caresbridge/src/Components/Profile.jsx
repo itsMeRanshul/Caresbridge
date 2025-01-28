@@ -1,55 +1,92 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "./Context.js/AutoContext";
 
 const ProfilePage = () => {
   const { userId } = useParams(); // Extract userId from the URL
   const navigate = useNavigate();
+
+  const { userId: contextUserId, logoutUser } =useAuth()
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    phone: "",
+    phone_no: "",
     password: "",
+    address: "", // Added address field
   });
+
+
   const [isEditing, setIsEditing] = useState(false);
 
+  
   useEffect(() => {
-    // Mock fetching user data based on userId
-    const mockData = {
-      1: { name: "John Doe", email: "john.doe@example.com", phone: "123-456-7890", password: "password123" },
-      2: { name: "Jane Smith", email: "jane.smith@example.com", phone: "987-654-3210", password: "password456" },
+    if (!contextUserId) {
+      navigate("/login"); // Redirect to login if no user is logged in
+      return;
+    }
+
+    // Fetch user data from the backend using the logged-in user's ID
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/users/${contextUserId}`); // Use contextUserId only
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+        setUserData({
+          name: data.name,
+          email: data.email,
+          phone_no: data.phone_no,
+          address: data.address,
+          password: "",
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Unable to fetch user data. Please try again later.");
+      }
     };
 
-    // Check if the user exists in mock data and update the state
-    if (mockData[userId]) {
-      setUserData(mockData[userId]);
-    } else {
-      console.error("User not found for userId:", userId);
-    }
-  }, [userId]); // Ensure this runs every time userId changes
+    fetchUserData();
+  }, [contextUserId, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSaveChanges = () => {
-    // Simulate saving user data
-    console.log("Updated user data for userId", userId, ":", userData);
-    alert("Profile updated successfully! (Mock)");
-    setIsEditing(false);
-  };
+  const handleSaveChanges = async () => {
+    try {
+      const filteredData = Object.fromEntries(
+        Object.entries(userData).filter(([_, value]) => value !== "" && value !== undefined)
+      );
 
-  const handleLogout = () => {
-    // Clear session data (if any)
-    localStorage.removeItem("userId"); // Assuming you're storing the userId in localStorage
-    // Or you could use sessionStorage.removeItem("userId");
-    
-    // Navigate to home page after logout
-    navigate("/");
+      const response = await fetch(`http://localhost:8000/users/${contextUserId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filteredData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      alert("Profile updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile. Please try again.");
+    }
   };
+  
+
+  
+  
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen bg-pink-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Your Profile</h1>
         <div className="space-y-4">
@@ -83,8 +120,8 @@ const ProfilePage = () => {
             <label className="block text-sm font-medium text-gray-700">Phone</label>
             <input
               type="text"
-              name="phone"
-              value={userData.phone}
+              name="phone_no"
+              value={userData.phone_no}
               onChange={handleInputChange}
               disabled={!isEditing}
               className={`mt-1 block w-full px-4 py-2 text-gray-800 border rounded-md ${
@@ -92,12 +129,13 @@ const ProfilePage = () => {
               }`}
             />
           </div>
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-gray-700">Address</label>
             <input
-              type="password"
-              name="password"
-              value={userData.password}
+              type="text"
+              name="address"
+              value={userData.address}
               onChange={handleInputChange}
               disabled={!isEditing}
               className={`mt-1 block w-full px-4 py-2 text-gray-800 border rounded-md ${
@@ -125,8 +163,8 @@ const ProfilePage = () => {
         </div>
         <div className="mt-4">
           <button
-            onClick={handleLogout}
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded"
+            onClick={logoutUser}
+            className="w-full bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded"
           >
             Logout
           </button>

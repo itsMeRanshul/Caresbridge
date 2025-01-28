@@ -29,10 +29,10 @@ export const ProductProvider = ({ children }) => {
     // Add to cart functionality
     const addToCart = (product) => {
         setCart((prevCart) => {
-          const existingItem = prevCart.find((item) => item.id === product.id);
+          const existingItem = prevCart.find((item) => item.product_id === product.product_id);
           if (existingItem) {
             return prevCart.map((item) =>
-              item.id === product.id
+                item.product_id === product.product_id
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
             );
@@ -46,7 +46,7 @@ export const ProductProvider = ({ children }) => {
     const updateCartItem = (id, increment) => {
         setCart((prevCart) =>
             prevCart.map((item) =>
-                item.id === id
+                item.product_id === id
                     ? { ...item, quantity: Math.max(1, item.quantity + increment) }
                     : item
             )
@@ -55,7 +55,7 @@ export const ProductProvider = ({ children }) => {
 
     // Remove item from cart
     const removeFromCart = (id) => {
-        setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+        setCart((prevCart) => prevCart.filter((item) => item.product_id !== id));
     };
 
     return (

@@ -1,14 +1,23 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const DeleteProductForm = () => {
   const [productId, setProductId] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock delete logic
-    console.log('Product ${productId} Deleted');
-    alert("Product deleted successfully!");
-    setProductId("");
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/admin/deleteproduct/${productId}`
+      );
+      console.log("Product deleted successfully:", response.data);
+      alert("Product deleted successfully!");
+      setProductId(""); // Reset the productId input field
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Failed to delete product. Please try again.");
+    }
   };
 
   return (
