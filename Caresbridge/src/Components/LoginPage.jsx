@@ -20,7 +20,7 @@ const LoginPage = () => {
         email,
         password,
       });
-      console.log(process.env.REACT_APP_BACKEND_URL);
+     
 
 
       // Successful login response
