@@ -12,7 +12,7 @@ const OrderHistoryPage = () => {
     const fetchOrders = async () => {
       try {
         // Replace with your backend URL and include the user ID
-        const response = await axios.get(`http://localhost:8000/orders/${userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/orders/${userId}`);
         console.log(response.data)
         setOrders(response.data);
         setLoading(false);

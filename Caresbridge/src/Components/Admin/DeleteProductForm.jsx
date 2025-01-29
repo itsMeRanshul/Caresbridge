@@ -9,7 +9,7 @@ const DeleteProductForm = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8000/admin/deleteproduct/${productId}`
+        `${process.env.REACT_APP_BACKEND_URL}/admin/deleteproduct/${productId}`
       );
       console.log("Product deleted successfully:", response.data);
       alert("Product deleted successfully!");

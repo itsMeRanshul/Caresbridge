@@ -13,7 +13,7 @@ export const ProductProvider = ({ children }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/products");  // Replace with your actual API URL
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/products`);  // Replace with your actual API URL
                 console.log(response.data)
                 setProducts(response.data); // Set fetched data
                 setLoading(false); // Set loading to false after fetching data

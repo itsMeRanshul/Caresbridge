@@ -29,7 +29,7 @@ const ProfilePage = () => {
     // Fetch user data from the backend using the logged-in user's ID
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/users/${contextUserId}`); // Use contextUserId only
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${contextUserId}`); // Use contextUserId only
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
@@ -61,7 +61,7 @@ const ProfilePage = () => {
         Object.entries(userData).filter(([_, value]) => value !== "" && value !== undefined)
       );
 
-      const response = await fetch(`http://localhost:8000/users/${contextUserId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${contextUserId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

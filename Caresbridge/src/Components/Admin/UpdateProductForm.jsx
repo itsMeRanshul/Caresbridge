@@ -23,7 +23,7 @@ const UpdateProductForm = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/admin/updateproduct/${productId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/admin/updateproduct/${productId}`,
         updatedData
       );
       console.log("Product updated successfully:", response.data);
