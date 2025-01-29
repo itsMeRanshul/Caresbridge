@@ -13,7 +13,7 @@ app = FastAPI(title="E-commerce API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://lambent-bienenstitch-5c63e5.netlify.app/"],  # Update this to match your frontend's URL
+    allow_origins=["https://lambent-bienenstitch-5c63e5.netlify.app"],  # Update this to match your frontend's URL
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
