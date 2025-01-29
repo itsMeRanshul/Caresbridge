@@ -18,12 +18,12 @@ export default function Home() {
         {
             title: "Collaboration",
             description: "Working together to achieve groundbreaking results.",
-            image: "/assets/healthcare[1].jpg",
+            image: "/assets/healthcare[1].webp",
         },
         {
             title: "Sustainability",
             description: "Ensuring long-term positive impact on the environment.",
-            image: "/assets/WhatsApp Image 2025-01-28 at 14.26.34_33ffc90e.jpg",
+            image: "/assets/WhatsApp Image 2025-01-28 at 14.26.34_33ffc90e.webp",
         },
     ];
     const [showFullText, setShowFullText] = useState(false);

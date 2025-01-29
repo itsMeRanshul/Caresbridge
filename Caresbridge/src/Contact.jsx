@@ -32,19 +32,26 @@ export default function Contact() {
                     .animate-slideUp {
                         animation: slideUp 0.8s ease-out;
                     }
+
+                    .truncate-text {
+                        word-wrap: break-word;
+                        word-break: break-word;
+                        overflow-wrap: break-word;
+                        white-space: normal;
+                    }
                 `}
             </style>
-            <section className="bg-pink-50 text-gray-900 py-16 px-6 sm:px-12 lg:px-24">
-                <h2 className="text-4xl font-extrabold text-center mb-12 text-pink-900 animate-fadeIn">
+            <section className="bg-pink-50 text-gray-900 py-8 px-4 sm:px-6 md:px-12 lg:px-24">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-pink-900 animate-fadeIn">
                     Contact Us
                 </h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                     {/* Contact Info Section */}
-                    <div className="space-y-8">
+                    <div className="space-y-6 sm:space-y-8">
                         {[
                             {
                                 title: "Address",
-                                content: " Office no. 1031, 10th Floor, Plot No. 7, Laxminagar, District Centre, Delhi",
+                                content: "Office no. 1031, 10th Floor, Plot No. 7, Laxminagar, District Centre, Delhi",
                                 iconBg: " bg-gradient-to-r from-gray-800 to-pink-900 ",
                                 icon: (
                                     <path
@@ -70,7 +77,7 @@ export default function Contact() {
                             },
                             {
                                 title: "Email",
-                                content: "CARESBRIDGE.PHARMACEUTICALS@GMAIL.COM ",
+                                content: "CARESBRIDGE.PHARMACEUTICALS@GMAIL.COM",
                                 iconBg: " bg-gradient-to-r from-gray-800 to-pink-900",
                                 icon: (
                                     <path
@@ -84,9 +91,9 @@ export default function Contact() {
                         ].map(({ title, content, iconBg, icon }, index) => (
                             <div
                                 key={index}
-                                className="flex items-center space-x-4 p-4 rounded-lg shadow-md  bg-gradient-to-r from-gray-500 to-pink-100 hover:shadow-lg transition-transform transform hover:scale-105 hover:translate-y-1 hover:rotate-1 duration-300 animate-slideUp"
+                                className="flex items-start space-x-4 p-4 rounded-lg shadow-md bg-gradient-to-r from-gray-500 to-pink-100 hover:shadow-lg transition-transform transform hover:scale-105 hover:translate-y-1 hover:rotate-1 duration-300 animate-slideUp"
                             >
-                                <div className={`${iconBg} p-4 rounded-full`}>
+                                <div className={`${iconBg} p-3 rounded-full`}>
                                     <svg
                                         className="w-6 h-6 text-white"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -98,8 +105,8 @@ export default function Contact() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-semibold text-black">{title}</h3>
-                                    <p className="text-black">{content}</p>
+                                    <h3 className="text-lg sm:text-xl font-semibold text-black">{title}</h3>
+                                    <p className="text-sm sm:text-base text-black truncate-text">{content}</p>
                                 </div>
                             </div>
                         ))}
@@ -108,7 +115,7 @@ export default function Contact() {
                     {/* Map Section */}
                     <div className="animate-fadeIn">
                         <iframe
-                            className="w-full h-80 rounded-lg shadow-lg border-4 border-pink-800"
+                            className="w-full h-64 sm:h-80 rounded-lg shadow-lg border-4 border-pink-800"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7004.049410297229!2d77.07134898328184!3d28.62902165479911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d04bf6ac2495d%3A0xfff07fc03531f009!2sDistrict%20Centre%2C%20Janakpuri%2C%20Delhi!5e0!3m2!1sen!2sin!4v1738058284088!5m2!1sen!2sin" 
                             allowFullScreen=""
                             loading="lazy"
