@@ -14,6 +14,7 @@ export const ProductProvider = ({ children }) => {
         const fetchProducts = async () => {
             try {
                 console.log(process.env.REACT_APP_BACKEND_URL);
+                console.log(process.env.REACT_APP_BACKEND_URL);
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/products`);  // Replace with your actual API URL
                 console.log(response.data)
                 setProducts(response.data); // Set fetched data
