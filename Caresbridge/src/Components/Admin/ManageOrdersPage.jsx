@@ -9,7 +9,7 @@ const ManageOrdersPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin/orders`); // Fetch orders from API
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/orders`); // Fetch orders from API
         console.log("Orders response:", response.data); // Debug API response
         setOrders(response.data || []); // Ensure response is always handled as an array
         setLoading(false);
@@ -24,7 +24,7 @@ const ManageOrdersPage = () => {
   // Update order status
   const updateOrderStatus = async (orderId, status) => {
     try {
-      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/admin/orders/${orderId}`, { order_status: status }); // Update order status
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/admin/orders/${orderId}`, { order_status: status }); // Update order status
       
       setOrders((prevOrders) =>
         prevOrders.map((order) =>

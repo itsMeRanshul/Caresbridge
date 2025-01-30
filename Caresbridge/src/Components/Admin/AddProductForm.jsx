@@ -23,7 +23,7 @@ const AddProductForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/addproduct/`, product, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/admin/addproduct/`, product, {
         headers: {
           "Content-Type": "application/json",
         },

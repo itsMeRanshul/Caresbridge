@@ -33,7 +33,7 @@ const Cart = () => {
   
     try {
       // Create the order first by sending necessary details
-      const orderResponse = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/order/`, {
+      const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/order/`, {
         user_id: userId,  // Replace with the actual user id
         products: cart.map(item => ({
           product_id: item.product_id,
@@ -49,7 +49,7 @@ const Cart = () => {
       console.log("Order ID:", orderId);  // Check if the orderId is correct
   
       // Now initiate the payment with the order_id
-      const paymentResponse = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/payment/initiate`, {
+      const paymentResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/payment/initiate`, {
         amount: totalPrice * 100,  // Convert to paise
         currency: "INR",
         order_id: orderId,  // Use the order_id returned from the create_order API
@@ -69,7 +69,7 @@ const Cart = () => {
         handler: async function (response) {
           try {
             // Verify payment after successful transaction
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/payment/verify`, response);
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/payment/verify`, response);
            console.log(response)
             alert("Payment Successful!");
           } catch (error) {

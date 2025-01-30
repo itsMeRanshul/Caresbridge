@@ -14,7 +14,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/register`, {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, {
                 name: name,
                 email: email,
                 password: password,
