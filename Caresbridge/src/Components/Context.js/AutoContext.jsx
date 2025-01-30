@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect ,useNavigate} from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -26,8 +26,7 @@ const AuthProvider = ({ children }) => {
   window.dispatchEvent(new Event("localStorageUpdate"));
   
     // Redirect to the home or login page
-    const navigate = useNavigate();
-     navigate("/login");
+    window.location.href = "/login";
   };
   useEffect(() => {
      // Listen for localStorage updates
