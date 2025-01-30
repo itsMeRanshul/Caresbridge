@@ -14,7 +14,7 @@ export const ProductProvider = ({ children }) => {
         const fetchProducts = async () => {
             try {
                
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/products`);  // Replace with your actual API URL
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/products/`);  // Replace with your actual API URL
                 console.log(response.data)
                 setProducts(response.data); // Set fetched data
                 setLoading(false); // Set loading to false after fetching data
