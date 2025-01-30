@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 const SliderComponent = () => {
   const slides = [
-    { id: 1, title: "Slide 1", image: "assets/slider6.webp" },
-    { id: 2, title: "Slide 2", image: "assets/slider5.webp" },
+    { id: 1, title: "Slide 1", image: "assets/slider6.png" },
+    { id: 2, title: "Slide 2", image: "assets/slider5.png" },
     { id: 3, title: "Slide 3", image: "/assets/slider4.webp" },
   ];
 
